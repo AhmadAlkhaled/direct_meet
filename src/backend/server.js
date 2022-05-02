@@ -8,6 +8,18 @@ const app = express();
 const URL_DB = process.env.DB;
 const port = process.env.PORT || 5000;
 
+const SECRET_TOKEN = process.env.SECRET_TOKEN;
+const signAccessToken = (data) => {
+    return jwt.sign(data,SECRET_TOKEN);
+}
+
+const createHash = (password) =>
+{
+    const secret = SECRET_KEY;
+    const hash = crypto.createHmac('sha256', secret).update(password).digest('hex');
+    return hash;
+}
+
 app.use( '/static' ,express.static(path.join(__dirname, '../../dist'), { index: false }));
 
 app.get('/', (req, res) => {
@@ -15,5 +27,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port,()=>{
-    console.log( ` server listening on ${port}` );
+    console.log( `server listening on ${port}` );
 });
