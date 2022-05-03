@@ -93,7 +93,7 @@ exports.userUpdate = async (req, res) =>
         res.status(200).json({success:true});
         res.end();
     }
-};
+}
 
 exports.userLogout = (req, res) =>
 {
@@ -103,6 +103,17 @@ exports.userLogout = (req, res) =>
         success: true,
         message: 'user logged out'
     });
-};
+}
+
+exports.userDelete = (req, res) =>
+{
+    const mongoId = mongoose.isValidObjectId(req.params.id);
+    if (!mongoId)
+        return res.status(400).send('wrong Id');
+    const userDeleted =  await User.findByIdAndDelete(req.params.id);
+    if (!userDeleted) 
+        return res.status(404).send('wrong Id');
+    res.status(200).send(`user with id ${req.params.id} deleted!`);
+}
 
 mongoose.connection.close();
