@@ -35,7 +35,7 @@ const Home = ()=>{
 
         {
             (startMeeting)?
-''
+            ''
             :
             <div className="home_second">
 
@@ -106,11 +106,8 @@ const Home = ()=>{
 
         </div> 
 
-
         }
            
-           
-
         </div>
         </>
     )
