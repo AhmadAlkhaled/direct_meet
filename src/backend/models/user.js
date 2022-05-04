@@ -8,6 +8,6 @@ const user = new Schema({
     userImage: Object
 }, { timestamps: true });
 
-const userModel = new model('user', user, 'users');
+const User = new model('user', user, 'users');
 
-module.exports = userModel;
+module.exports = User;
