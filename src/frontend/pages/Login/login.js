@@ -32,7 +32,7 @@ const Login = (props) => {
             setLoding(true);
             e.preventDefault()
             const data = { email: email, password: password }
-            axios.post('http://localhost:5000/login',data)
+            axios.post('http://localhost:3000/login',data)
            
             .then((data)=>{
                console.log(data);
@@ -63,7 +63,7 @@ const Login = (props) => {
            if(password === passwordConfirm) {
                
             const data = { username: userName, email: email, password: password, Password_Confirm: passwordConfirm }
-            axios.post('http://localhost:5000/create/user',data);
+            axios.post('http://localhost:3000/create/user',data);
               setUserName("");
               setEmail("");
               setPassword("");

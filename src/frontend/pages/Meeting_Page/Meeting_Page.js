@@ -191,7 +191,7 @@ const MeetingPage = (props) => {
                <i class="fa-solid fa-xmark" title='exit' onClick={()=>{ setMeetingLink(false) }} ></i>
                <i class="fa-regular fa-clone" title='copy link' ></i>
                <p> Meeting Link </p>
-               http://localhost:5000/Meeting{props.id}
+               http://localhost:3000/Meeting{props.id}
                
                </div>
                :''

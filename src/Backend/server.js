@@ -19,14 +19,14 @@ const multer = require('multer');
 
 const io = new Server(server, {
     cors: {
-      origin: "https://chatt-test.herokuapp.com/",
+      origin: "http://localhost:3000/",
       methods: ["GET", "POST"],
     },
 });
 
 const URL_DB = `mongodb+srv://direct:direct@cluster0.9veiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // ----------- import files. -----------------------------
 
