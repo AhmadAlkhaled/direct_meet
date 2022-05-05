@@ -13,13 +13,12 @@ const Home = ()=>{
     const [ meetingId , setMeetingId  ] = useState ('');
     const [ join,setJoin ] = useState (true);
     const [ startMeeting,setStartMeeting ] = useState (false);
-    const [ id , setID ] = useState (uuid());
+    const [ id , setID ] = useState ('e008a253-ca1d-44e9-8229-b9639b21e538');
 
     const navigate = useNavigate();
   
- 
   
-
+   
     return (
         <>
         
@@ -35,7 +34,7 @@ const Home = ()=>{
 
         {
             (startMeeting)?
-            ''
+''
             :
             <div className="home_second">
 
@@ -106,8 +105,11 @@ const Home = ()=>{
 
         </div> 
 
+
         }
            
+           
+
         </div>
         </>
     )

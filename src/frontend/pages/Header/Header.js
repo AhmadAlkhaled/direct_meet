@@ -4,6 +4,7 @@ import logo from '../../images/Logo.png';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Edit_Profile } from "../Edit-Profile/Edit-Profile"
+import  axios  from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -22,7 +23,11 @@ const Header = ()=> {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        
+        // setInterval(() => {
+        //     const randomColor = Math.floor(Math.random()*16777215).toString(16);
+            
+        //     setShadowColor('#'+randomColor)
+        // }, 6000);
     },[uploadFile])
 
     useEffect(()=>{
@@ -33,9 +38,33 @@ const Header = ()=> {
         setUserInfo('');
     }else{
         setUserInfo(user);
-    }},[])
+    }
+ 
+    setTimeout (()=>{
+        axios.post('http://localhost:5000/img',{email: user.email})
+        .then((data)=>{
+            setImgSrc(data.data.img);
+        })
 
-    
+    },10)
+      
+        
+    },[])
+
+    const Logout = () => { 
+        axios.post('http://localhost:5000/user/logout')
+        .then((data)=>{ 
+            
+            if(data.data.message === 'user logged out')
+            {
+                localStorage.setItem('token', 'null');
+                localStorage.setItem('user','null');
+                navigate(`/`);
+                location.reload();
+                
+            }
+        });
+    }
     const imgUpload = () => {
 
         const x = document.querySelector('.upload_pic');
@@ -52,6 +81,13 @@ const Header = ()=> {
                     
                     
                     const data = {confirmEmail:userInfo.email ,  buffer:dataURL, originalname:x.files[0].name , mimetype:x.files[0].type  }
+
+                    console.log(data);
+                        axios.post('http://localhost:5000/uploadphoto',data)
+                        .then((e)=>{
+                            console.log('img updated .. ');
+
+                        })
                     };
                     reader.readAsDataURL(input.files[0]);
               };
@@ -165,7 +201,7 @@ const Header = ()=> {
 
                 <div className="profile_line"></div>
 
-                <h3 onClick={()=>{  }} >Logout</h3>
+                <h3 onClick={()=>{Logout()  }} >Logout</h3>
           </>
 
             }

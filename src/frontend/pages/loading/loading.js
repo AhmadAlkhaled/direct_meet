@@ -16,8 +16,8 @@ const Loading = () => {
     <motion.div 
     
     style={{display:dis}}
-    initial={{x:0,opacity:1}}
-    animate={{x:'100vw' ,opacity:0}}
+    initial={{opacity:1}}
+    animate={{opacity:0}}
     transition={{ delay:2 , duration:0.5 }}
     className="loading_container">
 

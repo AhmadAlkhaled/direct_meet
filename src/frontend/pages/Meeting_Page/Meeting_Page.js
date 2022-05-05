@@ -22,16 +22,12 @@ const MeetingPage = (props) => {
     const [ meetingLink , setMeetingLink] = useState(true);
     const [ streamBoxWidth , setStreamBoxWidth] = useState('100%');
     const [ videoBoxWidth , setSvideoBoxWidth] = useState('50%');
-    const [userInfo, setUserInfo] = useState ('');
 
     const videoRef = useRef ();
     const screenRef = useRef ();
     const audioRef = useRef ();
 
-    useEffect(()=>{
-        const user = JSON.parse(localStorage.getItem('user'));
-        setUserInfo(user);
-    },[])
+   
 
     const  screenOn = ()=>{
       
@@ -80,15 +76,10 @@ const MeetingPage = (props) => {
             }
         });
     }
-
-
-
     const cameraOn = () => { 
         navigator.mediaDevices.getUserMedia({ video:{ width:'100%'} })
         .then((stream)=>{ setCamera(true); videoRef.current.srcObject = stream });
     }
-
-    
     const  videoStop = ()=>{
         const tracks = videoRef.current.srcObject.getTracks();
         tracks.forEach((track) =>{
@@ -111,8 +102,6 @@ const MeetingPage = (props) => {
                 track.stop();
             }});
     }
-  
-
     window.addEventListener("resize", ()=>{
         const x = document.querySelector('.videoBox');
         setvideoBox((x.clientWidth)/100*71.5);
@@ -170,19 +159,30 @@ const MeetingPage = (props) => {
     return (
         <div className="meeting_page" 
             onClick={ ()=>{
-                (footer)?
-                setFooter(false)
-                :setFooter(true);
+                if(screen || x1.clientWidth < 600 )
+                {
+                    (footer)?
+                    setFooter(false)
+                    :setFooter(true);
+                }
+           
             }}
             onMouseMove={(e)=>{ 
-                if(  e.clientY > windH-100  )
+                if(screen)
                 {
+                    if(  e.clientY > windH-100  )
+                    {
+                        setFooter(true);
+                    }
+                    if(  e.clientY < windH-290  )
+                    {
+                        setFooter(false);
+                    }
+
+                }else{
                     setFooter(true);
                 }
-                if(  e.clientY < windH-290  )
-                {
-                    setFooter(false);
-                }
+               
             }}>
            
            {
@@ -191,14 +191,13 @@ const MeetingPage = (props) => {
                <i class="fa-solid fa-xmark" title='exit' onClick={()=>{ setMeetingLink(false) }} ></i>
                <i class="fa-regular fa-clone" title='copy link' ></i>
                <p> Meeting Link </p>
-               http://localhost:3000/Meeting{props.id}
+               http://localhost:5000/Meeting{props.id}
                
                </div>
                :''
 
            }
                
-            
                 {
                     (screen)?
                     <div className="screenBox" >
@@ -215,18 +214,10 @@ const MeetingPage = (props) => {
                         (camera)?
                         <video className='video' ref={videoRef} autoPlay ></video>
                         :
-                        <div className="videoStopBox" style={{height:videoBox}} ><div className="videoStopBoxA" style={{ backgroundImage:`url(${userInfo.img})`}
-                    }></div></div>
+                        <div className="videoStopBox" style={{height:videoBox}} ><div className="videoStopBoxA" >A</div></div>
                     }
                     <audio ref={audioRef} autoPlay  ></audio>
-                    <div className="videoUserName"> 
-                    {
-                        (userInfo.username != null)?
-
-                        userInfo.username.toUpperCase()
-                        :
-                        null
-                    } 
+                    <div className="videoUserName"> UserName  
                     {
                         (mic)?null:<i className="fa-solid fa-microphone-slash" ></i> 
                     }
@@ -277,10 +268,16 @@ const MeetingPage = (props) => {
                     (pup)?
                     <div className="pup" 
                         onMouseOut={()=>{
-                            setFooter(false);
+                            if(screen)
+                            {
+                                setFooter(false);
+                            }
                         }}
                         onMouseMove={()=>{
-                            setFooter(true);
+                            if(screen)
+                            {
+                                setFooter(true);
+                            }
                         }}
                     >
                          <i class="fa-solid fa-link" onClick={()=>{ 

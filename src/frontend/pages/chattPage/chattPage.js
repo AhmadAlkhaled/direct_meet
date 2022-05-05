@@ -47,6 +47,7 @@ const Chatt = (props) => {
                 })
               };
 
+
             useEffect(()=>{
                 const user = JSON.parse(localStorage.getItem('user'));
                 setUserInfo(user);
@@ -82,16 +83,16 @@ const Chatt = (props) => {
                                     <p className="text-message-chat">
                                         {e}
                                     </p>
-                                
                                 :
                                     <div className="file-lists">
-                                    <div className="file-info">
+                                    <div className="file-info" title={e.name} >
                                     {
                                         (e.name.length > 15 )?
                                         e.name.substring(0,20)+'...'
                                         :
                                         e.name
-                                    } <i class="fa-solid fa-cloud-arrow-down"
+                                    } 
+                                    <i class="fa-solid fa-cloud-arrow-down"
                                     onClick={()=>{
                                         Download(e.buffer, e.name);
                                     }} 
@@ -99,17 +100,13 @@ const Chatt = (props) => {
                                         </div>
                                     <embed className="main-file-lists" type={e.type} src={e.buffer}/>
                                     </div>
-                                
                             }
-                            
                         </li>
                     })
                 }
             </ul>
             <div  className="chatForm" >
-                <div className="up_imo_Box"
-                
-                >
+                <div className="up_imo_Box">
                     <i class="fa-regular fa-face-grin"
                     onClick={()=>{
                         (emoji) ? setEmoji(false) : setEmoji(true);
@@ -123,23 +120,21 @@ const Chatt = (props) => {
                         <input type="file"
                             onChange={(e)=>{
                                 dragAndDropUpload(e);
+                                setTextType(e.target.value)
+
                             }}
                             onDrop={(e)=>{
                                 dragAndDropUpload(e);
                             }}/> 
                     </i>
-                    
-                  
                 </div>
                 {
                     (emoji)?
                     <emoji-picker class="dark" 
                     onMouseOver={(e)=>{
                         e.target.addEventListener('emoji-click', event => {
-                            setTextType(`${textType} ${event.detail.unicode} `);
-                            console.log(event.detail);
-                          });
-                        
+                            setTextType(` ${textType} ${event.detail.unicode} `);
+                        });
                     }}
                     ></emoji-picker>
                     :
@@ -150,19 +145,20 @@ const Chatt = (props) => {
                 {
                     (onDragOver)?
                     <textarea className="textarea" placeholder="Massage..." value={textType}
-                    onKeyPress={(e) =>{
-                        if(e.code === "Enter"){
-                            
+                    onKeyPress={(e)=>{
+                        if(e.code === 'Enter')
+                        {
                             e.preventDefault();
-
-                                if(textType != ''){
-                                    setMessages([...messages, textType])
+                            if(textType != '')
+                            {
+                                setMessages([...messages, textType])
                                 setTextType('');
                                 e.target.parentElement.parentElement.children[1].scrollTo(0,e.target.parentElement.parentElement.children[1].scrollHeight);
-                                setEmoji(false);
-                                }
-                        }
+                                setEmoji(false); 
+                            }
 
+                        }
+                    
                     }}
                     onChange={(e)=>{
                         setTextType(e.target.value)
@@ -173,7 +169,6 @@ const Chatt = (props) => {
                 ></textarea>
                 :
                 <div className="onDragOver">
-                    <p className="dragText">Drag Your File Here...</p>
                     <input className="onDragOver-click" type="file"
                     onChange={(e)=>{
                         dragAndDropUpload(e);
@@ -190,16 +185,17 @@ const Chatt = (props) => {
                         setOnDragOver(true);
                     }}
                     /> 
+                      <p className="dragText" >Drag Your File Here...</p>
                 </div>
                 }
                 <i class="fa-solid fa-paper-plane"
                 onClick={(e)=>{
-
-                    if(textType != ''){
+                    if(textType != '')
+                    {
                         setMessages([...messages, textType])
                         setTextType('');
                         e.target.parentElement.parentElement.children[1].scrollTo(0,e.target.parentElement.parentElement.children[1].scrollHeight);
-                        setEmoji(false);
+                        setEmoji(false); 
                     }
                 }}
                 ></i>

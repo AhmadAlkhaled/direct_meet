@@ -1,7 +1,7 @@
 import './Edit-Profile.css';
 import { useState, useEffect } from 'react';
 import { Alert } from '../Alert/Alert';
-
+import  axios  from 'axios';
 
 const Edit_Profile = (props) => {
 
@@ -62,7 +62,11 @@ const Edit_Profile = (props) => {
            
           const data = { username: userName, email: email,  password: password , confirmEmail:confirmEmail}
           
-            
+            axios.post('http://localhost:5000/user/update', data )
+            .then(()=>{ 
+                localStorage.setItem('user',JSON.stringify( data));
+                location.reload();
+             })
               console.log(data);
               setUserName("");
               setEmail("");
