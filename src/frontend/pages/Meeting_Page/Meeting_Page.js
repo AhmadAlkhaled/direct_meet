@@ -22,12 +22,16 @@ const MeetingPage = (props) => {
     const [ meetingLink , setMeetingLink] = useState(true);
     const [ streamBoxWidth , setStreamBoxWidth] = useState('100%');
     const [ videoBoxWidth , setSvideoBoxWidth] = useState('50%');
+    const [userInfo, setUserInfo] = useState ('');
 
     const videoRef = useRef ();
     const screenRef = useRef ();
     const audioRef = useRef ();
 
-   
+    useEffect(()=>{
+        const user = JSON.parse(localStorage.getItem('user'));
+        setUserInfo(user);
+    },[])
 
     const  screenOn = ()=>{
       
@@ -214,10 +218,27 @@ const MeetingPage = (props) => {
                         (camera)?
                         <video className='video' ref={videoRef} autoPlay ></video>
                         :
-                        <div className="videoStopBox" style={{height:videoBox}} ><div className="videoStopBoxA" >A</div></div>
+                        <div className="videoStopBox" style={{height:videoBox}} ><div className="videoStopBoxA"
+                        style={{ backgroundImage:`url(${(userInfo.img)? userInfo.img: null})`}} 
+                        >
+                            {
+                                (userInfo.img) ?
+                                null
+                                :
+                                (userInfo != '' && userInfo != 'null') ? 
+                                userInfo.username.charAt(0).toUpperCase():null
+                            }
+                            </div></div>
                     }
                     <audio ref={audioRef} autoPlay  ></audio>
-                    <div className="videoUserName"> UserName  
+                    <div className="videoUserName"> 
+                    {
+                        (userInfo.username != null)?
+
+                        userInfo.username.toUpperCase()
+                        :
+                        null
+                    }   
                     {
                         (mic)?null:<i className="fa-solid fa-microphone-slash" ></i> 
                     }

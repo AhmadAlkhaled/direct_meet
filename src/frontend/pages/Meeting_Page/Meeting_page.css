@@ -55,7 +55,6 @@
 }
 .streamBox{
     width: 100%;
-    margin-top: -85px;
     height: 83vh;
     display: flex;
     justify-content:center;
@@ -65,7 +64,7 @@
     padding-bottom: 50px;
 }
 .videoBox{
-    border: 2px solid rgb(91, 139, 228);
+    border: 2px solid #5B8BE4;
     border-radius:20px;
     overflow: hidden;
 }
@@ -106,7 +105,7 @@
 .meetingLink{
     width: 500px;
     padding: 20px;
-    background-color:rgba(49, 152, 225, 0.429);
+    background-color:rgba(199, 197, 197, 0.264);
     color:white;
     border-radius: 20px;
     position: absolute;
@@ -142,7 +141,7 @@
     width: 27%;
     height: 39%;
     border-radius: 50%;
-    background-color:rgb(28, 106, 123);
+    background-color:#35496D;
     display: flex;
     justify-content: center;
     align-items: center;

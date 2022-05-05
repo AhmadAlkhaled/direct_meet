@@ -23,12 +23,10 @@ const Header = ()=> {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        // setInterval(() => {
-        //     const randomColor = Math.floor(Math.random()*16777215).toString(16);
-            
-        //     setShadowColor('#'+randomColor)
-        // }, 6000);
-    },[uploadFile])
+        const user = JSON.parse( localStorage.getItem('user'));
+        user.img=imgSrc
+        localStorage.setItem('user', JSON.stringify(user))
+    },[imgSrc])
 
     useEffect(()=>{
       const user = JSON.parse( localStorage.getItem('user'));
