@@ -13,6 +13,20 @@
     justify-content:flex-end;
     align-items: center;
 }
+.File_preview{
+    width: 100%;
+    padding-top:30px ;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   
+}
+.File_preview i{
+    width: 100%;
+    font-size: 60px;
+    text-align:center
+   
+}
 .fa-up-right-from-square , .icoBox .fa-xmark{
     width: 30px;
     height: 30px;

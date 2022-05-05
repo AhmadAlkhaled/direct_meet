@@ -90,8 +90,16 @@ const Chatt = (props) => {
                                         Download(e.buffer, e.name);
                                     }} 
                                     ></i>
-                                        </div>
-                                    <embed className="main-file-lists" type={e.type} src={e.buffer}/>
+                                    </div>
+                                    {
+                                        (e.type  == 'text/html' || e.type  == 'application/pdf' || e.type  == 'text/csv' || e.type  =='video/mp4' || e.type.substring(0,5) == 'image' )?
+                                         <embed className="main-file-lists" type={e.type} src={e.buffer}/>
+                                        :
+                                        <div className="File_preview" > 
+                                        <i class="fa-solid fa-file"></i>
+                                        {e.type}-File </div>
+                                    }
+                                    
                                     </div>
                             }
                         </li>

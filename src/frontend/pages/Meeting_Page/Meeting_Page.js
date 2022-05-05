@@ -119,12 +119,10 @@ const MeetingPage = (props) => {
             
             if(screen)
             {
-                
                 setSvideoBoxWidth('50%');
             }else{
                 setStreamBoxWidth('100%');
                 setSvideoBoxWidth('100%');
-               
             }
 
         }else {
@@ -136,8 +134,6 @@ const MeetingPage = (props) => {
             }else{
                 setStreamBoxWidth('100%');
                 setSvideoBoxWidth('50%');
-                
-               
             }
         }
         setvideoBox((x.clientWidth)/100*71.5)
