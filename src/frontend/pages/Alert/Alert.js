@@ -3,8 +3,6 @@ import { useState } from 'react';
 
 const Alert = ()=>{
 
-    
-
     return (
         <div className="alert_box">
                     <div className="alert">
@@ -19,7 +17,7 @@ const Alert = ()=>{
                 <p> Successful... </p>
 
                     </div>
-                </div>
+        </div>
     )
 }
 

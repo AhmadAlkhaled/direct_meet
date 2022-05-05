@@ -302,7 +302,7 @@ const MeetingPage = (props) => {
                         }}
                     >
                          <i class="fa-solid fa-link" onClick={()=>{ 
-                             (meetingLink)?setMeetingLink(true)
+                             (meetingLink)?setMeetingLink(false)
                              :setMeetingLink(true)
                               
                              }} > <snap>Meeting Link </snap></i>

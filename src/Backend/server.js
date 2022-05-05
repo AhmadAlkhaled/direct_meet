@@ -183,7 +183,6 @@ app.post('/img',async (req, res)=>{
     const { email } = req.body
     mongoose.connect(URL_DB);
     const img = await User.findOne({email:email});
-  
     res.status(200).send({
             img:img.img
     })
@@ -198,7 +197,30 @@ app.post('/uploadphoto', upload.single("testImage"), async (req, res) =>
     res.end();
 });
 
-app.get('/', (req, res) => {
+
+app.post('/DeleteProfilePhoto', async (req, res) => {
+    const { Email} = req.body;
+    mongoose.connect(URL_DB);
+    const email1 = await User.updateOne({email:Email},{$set:{img:''} });
+    res.status(200).json({success:true});
+    res.end();
+});
+
+app.post('/DeleteAccount', async (req, res) => {
+    const { Email} = req.body;
+    mongoose.connect(URL_DB);
+    const email1 = await User.deleteOne({email:Email});
+    res.status(200)
+    .clearCookie("cookie_Token")
+    .json({
+        success: true,
+        message: 'user logged out'
+    });
+   
+});
+
+
+app.get('/',  (req, res) => {
     res.status(200).sendFile( path.join(__dirname,'../../dist' , 'index.html'));
 });
 

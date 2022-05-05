@@ -16,7 +16,7 @@
     height: 8%;
     position: absolute;
     bottom: 0;
-    background-color:rgba(0, 0, 0, 0.428);
+    /* background-color:rgba(0, 0, 0, 0.428); */
     font-size:25px;
     color:rgb(255, 255, 255);
     display: flex;
@@ -34,6 +34,7 @@
     justify-content:center;
     align-items: center;
     cursor: pointer;
+    font-size: 16px;
 }
 .video{
     width: 100%;
@@ -83,6 +84,8 @@
     background-color:rgba(0, 0, 0, 0.398);
     margin-bottom: 280px;
     position: absolute;
+    border-radius:10px;
+    overflow: hidden;
 }
 .pup i {
     width: 100%;
@@ -95,10 +98,10 @@
     
 }
 .pup i:hover {
-    background-color:rgb(8, 8, 8);
+    background-color:#5B8BE4;
 }
 .pup i snap{
-  font-size:15px;
+  font-size:13px;
   margin: 0 10px;
     
 }

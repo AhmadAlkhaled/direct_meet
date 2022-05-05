@@ -6,7 +6,8 @@ import { motion } from 'framer-motion';
 import { Edit_Profile } from "../Edit-Profile/Edit-Profile"
 import  axios  from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const Header = ()=> {
 
@@ -102,9 +103,7 @@ const Header = ()=> {
 
     return (
         <>
-        <div className="Header_main"
-        // style={{ boxShadow: ` 0px 0px 30px 3px ${ShadowColor} `}}
-        >
+        <div className="Header_main" >
             
                 <div className="logo">
                     <img src={logo}></img>
@@ -147,8 +146,7 @@ const Header = ()=> {
                     }}
                     onMouseLeave={()=>{
                         setProfilePic(false);
-                    }}
-                    >
+                    }}>
                         {
                             ( imgSrc == null || imgSrc == '' )?
                               (userInfo != '' && userInfo != 'null' )?userInfo.username.charAt(0).toUpperCase()
@@ -160,20 +158,13 @@ const Header = ()=> {
                     {
                         (profilePic) ?
                         <>
-                        
-                        
                         <input type='file' title=''  name="testImage" accept=".jpg, .jpeg, .png" multiple className="upload_pic"
                         
                         />
-                                
-                              
-                        
                         <div className="user_profile_two">
                             <i class="fas fa-camera"></i>
                             Change <br/> Profile <br/> Picture
                         </div>
-                       
-                        
                         </>
                         :
                         null
@@ -194,7 +185,38 @@ const Header = ()=> {
                         setEdit(true)
                     }}
                     >Edit profile</button>
-                    <button class="btn-settings">Setting</button>
+                    <button
+                    onClick={()=> {
+                        const user = JSON.parse( localStorage.getItem('user'));
+                        user.img=''
+                        localStorage.setItem('user', JSON.stringify(user))
+                        const data = { Email:userInfo.email}
+                        axios.post('http://localhost:3000/DeleteProfilePhoto',data)
+                        location.reload();
+                    }}
+                     > Delete Profile Photo </button>
+                    <button 
+                        onClick={()=> {
+                            Swal.fire({
+                                title: 'Are you sure, you want to Delete your Account!! ?',
+                                showCancelButton: true,
+                                confirmButtonText: 'Delete',
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const data = { Email: userInfo.email}
+                                    localStorage.setItem('token','null' );
+                                    localStorage.setItem('user','null');
+                                    axios.post('http://localhost:3000/DeleteAccount',data)
+                                    location.reload();
+                                } 
+                              })
+                                const x =  document.querySelector('.swal2-popup')
+                                    x.style.backgroundColor = '#000000a1';
+                                    x.style.borderRadius ='20px';
+                                    x.style.color ='white';
+                        
+                        }}
+                    >Delete Account</button>
                 </div>
 
                 <div className="profile_line"></div>

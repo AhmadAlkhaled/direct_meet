@@ -8,30 +8,22 @@ import { uuid } from 'uuidv4'
 
 const Home = ()=>{
 
-  
     const [ aboutText,setAboutText ] = useState (false);
     const [ meetingId , setMeetingId  ] = useState ('');
     const [ join,setJoin ] = useState (true);
     const [ startMeeting,setStartMeeting ] = useState (false);
     const [ id , setID ] = useState ('e008a253-ca1d-44e9-8229-b9639b21e538');
-
     const navigate = useNavigate();
   
-  
-   
     return (
         <>
-        
         <div className="home_main">
-        
         <Header />
 
         <Routes>
             <Route path={`/Meeting${id}`} element={ <MeetingPage id={id} navigate={navigate} setStartMeeting={setStartMeeting} /> } ></Route>
         </Routes>
        
-      
-
         {
             (startMeeting)?
 ''
@@ -100,16 +92,11 @@ const Home = ()=>{
                     setAboutText(true)
                 }}
                 >More About</span> </p>
-
             </div>
-
         </div> 
-
 
         }
            
-           
-
         </div>
         </>
     )

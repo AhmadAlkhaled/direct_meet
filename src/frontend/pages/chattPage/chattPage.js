@@ -5,11 +5,6 @@ import axios from 'axios'
 import fileDownload from 'js-file-download';
 import 'emoji-picker-element';
 
-
-
-
-
-
 const Chatt = (props) => { 
 
     const [onDragOver, setOnDragOver ] = useState (true);
@@ -17,10 +12,10 @@ const Chatt = (props) => {
     const [userInfo, setUserInfo] = useState ('');
     const [emoji, setEmoji] = useState (false);
     const [ textType, setTextType ] = useState ('');
+    const [ sendFile ,setSendFile  ] = useState ('')
     
             const dragAndDropUpload = function(file) {
                 const input = file.target;
-                
                 const reader = new FileReader();
                 reader.onload = function(){
                 const dataURL = reader.result;
@@ -30,9 +25,7 @@ const Chatt = (props) => {
                     type: file.target.files[0].type,
                     buffer: dataURL,
                 }
-                console.log(data.buffer);
-                setMessages([...messages,data])
-
+                setSendFile(data)
                 };
                 
                 reader.readAsDataURL(input.files[0]);
@@ -173,6 +166,7 @@ const Chatt = (props) => {
                     onChange={(e)=>{
                         dragAndDropUpload(e);
                         setOnDragOver(true);
+                        setTextType(e.target.value)
                     }}
                     onDrag={(e)=>{
                         setOnDragOver(true);
@@ -196,7 +190,16 @@ const Chatt = (props) => {
                         setTextType('');
                         e.target.parentElement.parentElement.children[1].scrollTo(0,e.target.parentElement.parentElement.children[1].scrollHeight);
                         setEmoji(false); 
+                        if(sendFile != '' )
+                        {
+                            setMessages([...messages,sendFile]);
+                            setSendFile('');
+                        }
+                    }else{
+                        setSendFile('');
                     }
+                
+                   
                 }}
                 ></i>
             </div>

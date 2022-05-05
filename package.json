@@ -45,10 +45,12 @@
     "simple-peer": "^9.11.1",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
+    "sweetalert2": "^11.4.10",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.4.0",
     "buffer": "^6.0.3",
     "events": "^3.3.0",
     "process": "^0.11.10",
