@@ -6,7 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0px 0px 30px 3px rgb(101, 24, 78);
+    box-shadow: 0px 0px 30px 3px white;
     overflow: hidden;
     transition: all 2s;
 }
