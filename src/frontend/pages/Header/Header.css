@@ -14,6 +14,11 @@
 {
     width:90px;
     height:90px;
+    background-image: url(../../images/Logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+   
 }
 .user_profile{
     width: 50px;

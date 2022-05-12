@@ -19,12 +19,27 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    text-align:center;
+   
+}
+.LinkBox{
+    width: 100%;
+    height: 100px;
+}
+.text-message-chat a{
+    color:rgb(152, 186, 245);
+   
+}
+.text-message-chat iframe{
+    width: 300px;
+    height: 300px;
    
 }
 .File_preview i{
     width: 100%;
     font-size: 60px;
-    text-align:center
+    text-align:center;
+    padding-bottom: 20px;
    
 }
 .fa-up-right-from-square , .icoBox .fa-xmark{
@@ -48,18 +63,17 @@
 }
 
 .emoji-mart .emoji-mart-light{
-    
     margin-left: 50%;
-   
 }
 .chatForm{
     width: 100%;
     height: 50px;
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     background-color: black;
     display: flex;
     justify-content: center;
+    z-index: 7;
 }
 .chatForm .textarea{
     width: 75%;
@@ -119,22 +133,22 @@
     width: 100%;
     height: 100%;
     position: relative;
-    top:-30px;
     overflow-y: none;
     overflow-x: none;
 }
 
 .file-lists{
     width: 200px;
-    height: 200px;
     border-radius: 10px;
     border: 2px solid white;
     overflow: hidden;
     background-color:white;
     margin-left: 47px;
+    
 }
 
 .file-info{
+    
     width: 100%;
     height: 30px;
     color: white;
@@ -176,7 +190,6 @@
     text-align: center;
     font-family: 'Cairo', sans-serif;
     position: absolute;
-    
 }
 .chat-profile-main{
     width: 100%;
@@ -188,11 +201,17 @@
     width: 35px;
     height: 35px;
     border-radius:50%;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   background-color: rgb(50, 98, 141);
 }
+
 .chat-profile-name{
     color:white;
     margin-left:12px;

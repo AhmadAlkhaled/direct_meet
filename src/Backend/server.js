@@ -8,7 +8,8 @@ const server = http.createServer(app);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const {uuid} = require('uuidv4');
+const { v4: uuidv4 } = require('uuid');
+
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const multer = require('multer');
@@ -224,41 +225,45 @@ app.get('/',  (req, res) => {
     res.status(200).sendFile( path.join(__dirname,'../../dist' , 'index.html'));
 });
 
-
-// app.get('/Meeting', (req, res) => {
-//     res.redirect(`/Meeting${uuid()}`);
-    
+// app.get('/Meeting',  (req, res) => {
+//     res.status(200).sendFile( path.join(__dirname,'../../dist' , 'Meeting.html'));
+   
 // });
 
-// app.get('/Meeting:room', (req, res) => {
-//     console.log('jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  
+
+app.get('/Meeting', (req, res) => {
+    res.redirect(`/Meeting${uuidv4()}`);
     
-// });
+});
+
+app.get('/Meeting:room', (req, res) => {
+    res.status(200).sendFile( path.join(__dirname,'../../dist' , 'Meeting.html'));
+    
+});
 
 // ----------- socket. -----------------------------
 
 
 
-io.on('connection', (socket )=>{
+io.on('connection', socket => {
     
-    console.info(`Client connected [id = ${socket.id}]`);
+  socket.on('join-room', (roomId, userId,username) => {
+      console.log('user-connected  '+roomId+'  :  '+ userId);
+    socket.join(roomId)
+        io.sockets.in(roomId).emit('user-connected', userId,username)
 
-    socket.on('room', (room)=>{
-        console.log('user joint to : ' + room );
-        socket.join(room);
-    });
+        socket.on('massage', (msg) => {
+            
+            io.sockets.in(roomId).emit('massage',msg)
+        });
 
-    socket.on('message', (msg)=>{
-        console.log(msg);
-        io.sockets.in(msg.RoomName).emit('message', { message: msg.massage,username:msg.username});
-    });
+        
 
-    socket.on('disconnect',()=>{
-        console.info(`Client gone [id = ${socket.id}]`);
-    });
-
-});
+    socket.on('disconnect', () => {
+        io.sockets.in(roomId).emit('user-disconnected', userId,username)
+    })
+  })
+})
 
 // ------------------------------
 

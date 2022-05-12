@@ -33,9 +33,7 @@ const Login = (props) => {
             e.preventDefault()
             const data = { email: email, password: password }
             axios.post('http://localhost:3000/login',data)
-           
             .then((data)=>{
-               console.log(data);
                setLoding(false);
                 if( data.data.message  === 'password or email is invalid' )
                 {
@@ -61,8 +59,7 @@ const Login = (props) => {
         if( userName && email && password && passwordConfirm ) {
             e.preventDefault()
            if(password === passwordConfirm) {
-               
-            const data = { username: userName, email: email, password: password, Password_Confirm: passwordConfirm }
+            const data = { username: userName, email: email, password: password}
             axios.post('http://localhost:3000/create/user',data);
               setUserName("");
               setEmail("");
@@ -104,6 +101,7 @@ const Login = (props) => {
                     <input type="email" name="email" placeholder="E-mail" value={email} required
                     onChange={ (e)=> {
                         setEmail(e.target.value);
+                        setLogerror(false);
                         }}
                     />
                     <input type="password" name="password"

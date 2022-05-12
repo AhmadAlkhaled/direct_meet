@@ -8,10 +8,7 @@ const App = () => {
 
 const [ loginOn ,setLoginOn ] = useState(false);
 
-
 const tok = localStorage.getItem('token')
-
-console.log(tok);
 
 useEffect(()=>{
   if(tok == 'null')

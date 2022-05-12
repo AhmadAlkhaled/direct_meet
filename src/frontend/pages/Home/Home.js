@@ -3,7 +3,13 @@ import { Header } from '../Header/Header';
 import { useState , useEffect} from 'react';
 import { MeetingPage } from '../Meeting_Page/Meeting_Page';
 import { BrowserRouter , Route , Routes ,Link ,useNavigate } from 'react-router-dom';
-import { uuid } from 'uuidv4'
+import { uuid } from 'uuidv4';
+
+
+
+
+
+
 
 
 const Home = ()=>{
@@ -12,22 +18,28 @@ const Home = ()=>{
     const [ meetingId , setMeetingId  ] = useState ('');
     const [ join,setJoin ] = useState (true);
     const [ startMeeting,setStartMeeting ] = useState (false);
-    const [ id , setID ] = useState ('e008a253-ca1d-44e9-8229-b9639b21e538');
+    const [ href,setHref ] = useState ('');
+   
+    
     const navigate = useNavigate();
+
+
+    useEffect(()=>{
+    const url = document.location.href.substring(22,1000)
+    console.log(url);
+    setHref(url)
+
+    },[]);
+   
   
+
     return (
         <>
         <div className="home_main">
         <Header />
-
-        <Routes>
-            <Route path={`/Meeting${id}`} element={ <MeetingPage id={id} navigate={navigate} setStartMeeting={setStartMeeting} /> } ></Route>
-        </Routes>
+        
        
-        {
-            (startMeeting)?
-''
-            :
+           
             <div className="home_second">
 
             <div className="home_form">
@@ -57,18 +69,14 @@ const Home = ()=>{
                              }else{
                                 setJoin(false);
                              }
-
                         }}
                         />
                         {
                             (join)?
+                            <a href="/Meeting" >
                             <button type="submit" name="start" 
-                            onClick={()=>{ 
-                                setStartMeeting(true)
-                                navigate(`/Meeting${id}`);
-                               
-                            }}
                              >+ Start new meeting</button>
+                             </a>
                             :<button type="submit" name="start"
                             onClick={ ()=>{ 
                                 setID(meetingId)
@@ -77,11 +85,8 @@ const Home = ()=>{
                                     navigate(`/Meeting${meetingId}`);
                                 },500)
                             }}
-                           
                               >+ join</button>
                         }
-                        
-                        
                     </div>
                 </>
             }
@@ -95,7 +100,7 @@ const Home = ()=>{
             </div>
         </div> 
 
-        }
+       
            
         </div>
         </>

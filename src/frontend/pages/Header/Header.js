@@ -19,6 +19,7 @@ const Header = ()=> {
     const [ ShadowColor , setShadowColor ]= useState ('blue');
     const [profilePic,setProfilePic] = useState(false);
     const [uploadFile,setUploadFile] = useState('');
+    
 
 
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Header = ()=> {
 
     useEffect(()=>{
       const user = JSON.parse( localStorage.getItem('user'));
-      console.log(user);
+      
       if(user == 'null')
     {
         setUserInfo('');
@@ -81,11 +82,10 @@ const Header = ()=> {
                     
                     const data = {confirmEmail:userInfo.email ,  buffer:dataURL, originalname:x.files[0].name , mimetype:x.files[0].type  }
 
-                    console.log(data);
+                  
                         axios.post('http://localhost:3000/uploadphoto',data)
                         .then((e)=>{
                             console.log('img updated .. ');
-
                         })
                     };
                     reader.readAsDataURL(input.files[0]);
@@ -207,6 +207,7 @@ const Header = ()=> {
                                     localStorage.setItem('token','null' );
                                     localStorage.setItem('user','null');
                                     axios.post('http://localhost:3000/DeleteAccount',data)
+                                    navigate(`/`);
                                     location.reload();
                                 } 
                               })
