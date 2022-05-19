@@ -24,10 +24,7 @@ const io = new Server(server, {
     },
 });
 
-// const URL_DB = `mongodb+srv://direct:direct@cluster0.9veiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-
-const URL_DB = mongoose.connect("mongodb://localhost:27017/direct-meet");
-
+const URL_DB = `mongodb+srv://direct:direct@cluster0.9veiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 const port = process.env.PORT || 3000;
 
@@ -86,7 +83,7 @@ app.post('/create/user', pwValidation.passwordValidation,
 async  (req, res) => {
     const error = validator.validationResult(req).errors;
 
-    if (error.length > 0) //validation fehler?
+    if (error.length > 0)
     {
         return res.status(400).json({
         success: false,
@@ -97,7 +94,7 @@ async  (req, res) => {
     const { username ,email , password } = req.body;
     console.log(req.body);
     try{
-     //   mongoose.connect('URL_DB');
+    mongoose.connect('URL_DB');
         const user = new User({
             username:username,
             email:email,
