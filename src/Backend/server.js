@@ -94,7 +94,7 @@ async  (req, res) => {
     const { username ,email , password } = req.body;
     console.log(req.body);
     try{
-    mongoose.connect('URL_DB');
+    mongoose.connect(URL_DB);
         const user = new User({
             username:username,
             email:email,
@@ -124,7 +124,7 @@ app.post('/login', async  (req, res) => {
         } = req.body;
 
     try{
-     //   mongoose.connect(URL_DB);
+     mongoose.connect(URL_DB);
         const email1 = await User.findOne({email:email});
        if(email1.password === createHash(password) )
        {
@@ -165,13 +165,13 @@ app.post('/user/update', async (req, res) =>
 
     if(password === '')
     {
-     //   mongoose.connect(URL_DB);
+    mongoose.connect(URL_DB);
         const email1 = await User.updateOne({email:confirmEmail},{$set: {username:username,email:email} });
         res.status(200).json({success:true});
         res.end();
 
     }else{
-    //    mongoose.connect(URL_DB);
+    mongoose.connect(URL_DB);
         const email1 = await User.updateOne({email:confirmEmail},{$set: {username:username, password:createHash(password),email:email} });
         res.status(200).json({success:true});
         res.end();
@@ -191,7 +191,7 @@ app.post('/user/logout', (req, res) =>
 
 app.post('/img',async (req, res)=>{
     const { email } = req.body
- //   mongoose.connect(URL_DB);
+ mongoose.connect(URL_DB);
     const img = await User.findOne({email:email});
     res.status(200).send({
             img:img.img
@@ -201,7 +201,7 @@ app.post('/img',async (req, res)=>{
 app.post('/uploadphoto', upload.single("testImage"), async (req, res) =>
 {
     const { buffer , confirmEmail} = req.body;
- //   mongoose.connect(URL_DB);
+ mongoose.connect(URL_DB);
     const email1 = await User.updateOne({email:confirmEmail},{$set:{img:buffer} });
     res.status(200).json({success:true});
     res.end();
@@ -210,7 +210,7 @@ app.post('/uploadphoto', upload.single("testImage"), async (req, res) =>
 
 app.post('/DeleteProfilePhoto', async (req, res) => {
     const { Email} = req.body;
-  //  mongoose.connect(URL_DB);
+  mongoose.connect(URL_DB);
     const email1 = await User.updateOne({email:Email},{$set:{img:''} });
     res.status(200).json({success:true});
     res.end();
@@ -218,7 +218,7 @@ app.post('/DeleteProfilePhoto', async (req, res) => {
 
 app.post('/DeleteAccount', async (req, res) => {
     const { Email} = req.body;
- //   mongoose.connect(URL_DB);
+ mongoose.connect(URL_DB);
     const email1 = await User.deleteOne({email:Email});
     res.status(200)
     .clearCookie("cookie_Token")
