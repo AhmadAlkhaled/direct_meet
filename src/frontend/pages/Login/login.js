@@ -63,7 +63,11 @@ const Login = (props) => {
            if(password === passwordConfirm) {
                
             const data = { username: userName, email: email, password: password, Password_Confirm: passwordConfirm }
-            axios.post('http://localhost:3000/create/user',data);
+            axios.post('http://localhost:3000/create/user',data).then((res) =>
+            {
+                console.log(res);
+            }
+            );
               setUserName("");
               setEmail("");
               setPassword("");
