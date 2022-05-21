@@ -13,8 +13,6 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const multer = require('multer');
 
-
-
 // ----------- variables ----------------------------
 
 const io = new Server(server, {
@@ -31,7 +29,6 @@ const port = process.env.PORT || 3000;
 // ----------- import files. -----------------------------
 
 const User = require('./model/Usermodel');
-
 
 // ----------- app.use(). -----------------------------
 
@@ -61,14 +58,12 @@ const upload = multer({
     }
 });
 
-
 // ----------- __________. -----------------------------
 
 const SECRET_TOKEN = 'f638f4354ff089323d1a5f78fd8f63ca';
 const signAccessToken = (data) => {
     return jwt.sign(data,SECRET_TOKEN);
 }
-
 
 const createHash = (password) =>
 {
@@ -105,7 +100,6 @@ app.post('/create/user', async  (req, res) => {
  
 });
 
-
 app.post('/login', async  (req, res) => {
     
     const { 
@@ -136,7 +130,6 @@ app.post('/login', async  (req, res) => {
                 user:'null'
             })
        }
-        
         res.end();
     }catch (err) {
         res.clearCookie("cookie_Token").status(200).json({
@@ -166,7 +159,6 @@ app.post('/user/update', async (req, res) =>
         res.status(200).json({success:true});
         res.end();
     }
-    
 });
 
 app.post('/user/logout', (req, res) =>
@@ -179,7 +171,7 @@ app.post('/user/logout', (req, res) =>
     });
 });
 
-app.post('/img',async (req, res)=>{
+app.post('/img', async (req, res)=>{
     const { email } = req.body
     mongoose.connect(URL_DB);
     const img = await User.findOne({email:email});
@@ -219,26 +211,11 @@ app.post('/DeleteAccount', async (req, res) => {
    
 });
 
-
 app.get('/',  (req, res) => {
     res.status(200).sendFile( path.join(__dirname,'../../dist' , 'index.html'));
 });
 
-
-// app.get('/Meeting', (req, res) => {
-//     res.redirect(`/Meeting${uuid()}`);
-    
-// });
-
-// app.get('/Meeting:room', (req, res) => {
-//     console.log('jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  
-    
-// });
-
 // ----------- socket. -----------------------------
-
-
 
 io.on('connection', (socket )=>{
     
@@ -260,13 +237,11 @@ io.on('connection', (socket )=>{
 
 });
 
-// ------------------------------
-
-
-
-
 // ----------- server listening . -----------------------------
 
 server.listen(port,()=>{
     console.log( ` server listening on :  ${port}` );
 });
+
+// export fot testing
+module.exports = app;
