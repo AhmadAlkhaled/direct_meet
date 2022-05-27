@@ -41,7 +41,7 @@ const Header = ()=> {
     }
  
     setTimeout (()=>{
-        axios.post('http://localhost:3000/img',{email: user.email})
+        axios.post('https://directmeet.herokuapp.com/img',{email: user.email})
         .then((data)=>{
             setImgSrc(data.data.img);
         })
@@ -52,7 +52,7 @@ const Header = ()=> {
     },[])
 
     const Logout = () => { 
-        axios.post('http://localhost:3000/user/logout')
+        axios.post('https://directmeet.herokuapp.com/user/logout')
         .then((data)=>{ 
             
             if(data.data.message === 'user logged out')
@@ -79,7 +79,7 @@ const Header = ()=> {
                     setImgSrc(dataURL)
                     const data = {confirmEmail:userInfo.email ,  buffer:dataURL, originalname:x.files[0].name , mimetype:x.files[0].type  }
 
-                        axios.post('http://localhost:3000/uploadphoto',data)
+                        axios.post('https://directmeet.herokuapp.com/uploadphoto',data)
                         .then((e)=>{
                             console.log('img updated .. ');
                         })
