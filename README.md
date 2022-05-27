@@ -1,3 +1,1 @@
 # chatt-test
-
-'tzjtzjtzjtzjtztzjtzjtzj'

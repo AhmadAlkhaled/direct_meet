@@ -7,25 +7,38 @@ import { uuid } from 'uuidv4';
 
 
 
-
-
-
-
-
 const Home = ()=>{
 
-    const [ aboutText,setAboutText ] = useState (false);
-    const [ meetingId , setMeetingId  ] = useState ('');
-    const [ join,setJoin ] = useState (true);
-    const [ startMeeting,setStartMeeting ] = useState (false);
-    const [ href,setHref ] = useState ('');
-   
+  
+    const [ loginOn ,setLoginOn ] = useState(false);
     const navigate = useNavigate();
+
+
+    const tok = localStorage.getItem('token')
+
+useEffect(()=>{
+  if(tok == 'null')
+  {
+    setLoginOn(false);
+  }else if(tok == null)
+  {
+    setLoginOn(false);
+  }
+  else{
+    setLoginOn(true);
+  }
+
+},[tok])
 
     return (
         <>
         <div className="home_main">
-        <Header />
+            {
+                (loginOn)?
+                <Header />
+                :''
+            }
+        
         <MeetingPage/>
         </div>
         </>

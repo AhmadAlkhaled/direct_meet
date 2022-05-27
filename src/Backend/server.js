@@ -184,6 +184,7 @@ app.post('/img',async (req, res)=>{
     const { email } = req.body
     mongoose.connect(URL_DB);
     const img = await User.findOne({email:email});
+   
     res.status(200).send({
             img:img.img
     })
@@ -225,11 +226,6 @@ app.get('/',  (req, res) => {
     res.status(200).sendFile( path.join(__dirname,'../../dist' , 'index.html'));
 });
 
-// app.get('/Meeting',  (req, res) => {
-//     res.status(200).sendFile( path.join(__dirname,'../../dist' , 'Meeting.html'));
-   
-// });
-
 
 app.get('/Meeting', (req, res) => {
     res.redirect(`/Meeting${uuidv4()}`);
@@ -243,24 +239,87 @@ app.get('/Meeting:room', (req, res) => {
 
 // ----------- socket. -----------------------------
 
+let peers = []
 
+const t = { t: true , f : false}
 
 io.on('connection', socket => {
     
-  socket.on('join-room', (roomId, userId,username) => {
-      console.log('user-connected  '+roomId+'  :  '+ userId);
-    socket.join(roomId)
-        io.sockets.in(roomId).emit('user-connected', userId,username)
+  socket.on('join-room', (roomId, userData) => {
 
-        socket.on('massage', (msg) => {
+        socket.join(roomId);
+        socket.on('peer', (peerId) => {
+            const userInfo = JSON.parse(userData)
+            const data = { userInfo, peerId , socket: socket.id ,cam:false , mic:false , ref:'' }
+            peers.push(data)
+            io.sockets.in(roomId).emit('peer',peers)
+        });
+        socket.on('screen', () => {
+          
+            io.sockets.in(roomId).emit('screenCall');
+        });
+        socket.on('screenStop', () => {
+            io.sockets.in(roomId).emit('screenStop')
+        });
+     
+        socket.on('camera', (peerId) => {
+            peers =  peers.map((peer)=>{
+                if(peer.peerId === peerId)
+                {
+                    peer.cam = true;
+                }
+                return peer
+            });
             
-            io.sockets.in(roomId).emit('massage',msg)
+            io.sockets.in(roomId).emit('camera',peers);
+            io.sockets.in(roomId).emit('videoCall',t);
         });
 
-        
+        socket.on('cameraStop', (peerId) => {
+            peers =  peers.map((peer)=>{
+                if(peer.peerId === peerId)
+                {
+                    peer.cam = false;
+                }
+                return peer
+            });
+            io.sockets.in(roomId).emit('camera',peers)
+        });
 
+        socket.on('mic', (peerId) => {
+            peers =  peers.map((peer)=>{
+                if(peer.peerId === peerId)
+                {
+                    peer.mic = true;
+                }
+                return peer
+            });
+            io.sockets.in(roomId).emit('mic',peers)
+        });
+
+        socket.on('micStop', (peerId) => {
+            peers =  peers.map((peer)=>{
+                if(peer.peerId === peerId)
+                {
+                    peer.mic = false;
+                }
+                return peer
+            });
+            io.sockets.in(roomId).emit('micStop',peers,peerId)
+        });
+        socket.on('massage', (msg) => {
+           
+            io.sockets.in(roomId).emit('massage',msg)
+        });
+       
+     
+     
     socket.on('disconnect', () => {
-        io.sockets.in(roomId).emit('user-disconnected', userId,username)
+        peers =  peers.filter((peer)=>{
+            return peer.socket != socket.id
+        });
+        
+        io.sockets.in(roomId).emit('user-disconnected',peers)
     })
   })
 })

@@ -9,7 +9,7 @@ import Picker from 'emoji-picker-react';
 
 
 const Chatt = (props) => { 
-
+   
     const [onDragOver, setOnDragOver ] = useState (true);
     const [messages, setMessages] = useState ([]);
     const [userInfo, setUserInfo] = useState ('');
@@ -18,16 +18,28 @@ const Chatt = (props) => {
     const [ sendFile ,setSendFile  ] = useState ('');
     
     
-
+   
+   
     useEffect(()=>{
+      
         socket.on('massage', (msg) => {
-            messages.push(msg);
-            setMessages([...messages]);
-            props.setMassagesLingth(props.massagesLingth+1);
+            if(msg === 'load')
+            {
+                console.log(msg);
+            }else{
+                messages.push(msg);
+                setMessages([...messages]);
+                props.setMassagesLingth( props.massagesLingth + 1 );
+            }
+          
         });
-
+      
     },[])
 
+    useEffect(()=>{
+            props.setMassagesLingth( props.massagesLingth + 1 );
+    },[messages])
+  
     const onEmojiClick = (event, emojiObject) => {
         setTextType(textType+emojiObject.emoji)
     };
@@ -92,12 +104,18 @@ const Chatt = (props) => {
     useEffect(()=>{
         const user = JSON.parse(localStorage.getItem('user'));
         setUserInfo(user);
+     
     },[])
+   
+    
+        
+    
 
     const date = new Date();
             
     return(
         <motion.div className="chatBox"
+        style={{height: (props.dis)?'100%' : '100%'}}
         animate={{x: (props.chat)? 0 : '700px'}}  >
             <div className="icoBox" >
             <i class="fa-solid fa-up-right-from-square"
@@ -111,20 +129,14 @@ const Chatt = (props) => {
                     (emoji)?
                     <>
                     <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '90%', backgroundColor:'#ffffff',border:'none',boxShadow:'none',position:'absolute',bottom:'60px',zIndex:'2000',left:'5%' }} />
-                
                     </>
-                    
                     :
                     null
-
             }
             <ul className="chat-list">
                 {
                     messages.map((e)=>{
                         return <li id="chat-li">
-
-                           
-
                             <div className="chat-profile-main">
                             <div className="chat-profile-pic"
                                 style={{ backgroundImage:`url(${e.img})`  }
@@ -218,24 +230,34 @@ const Chatt = (props) => {
                         {
                             e.preventDefault();
                             if(textType != '')
+                            {
+                                const user = JSON.parse(localStorage.getItem('user'));
+                                if(sendFile != '' )
                                 {
-                                    if(sendFile != '' )
-                                    {
-                                        socket.emit('massage',sendFile)
-                                        console.log(sendFile);
-                                        setSendFile('');
-                                        setTextType('');
-                                    }else{
-                                        socket.emit('massage',textType)
-                                        setTextType('');
-                                        e.target.parentElement.parentElement.children[1].scrollTo(0,e.target.parentElement.parentElement.children[1].scrollHeight);
-                                        setEmoji(false); 
+                                    const data = {
+                                        name:user.username,
+                                        img:user.img,
+                                        massage:sendFile
                                     }
-                                
-                                }else{
+                                    socket.emit('massage',data)
+                                    console.log(sendFile);
                                     setSendFile('');
+                                    setTextType('');
+                                }else{
+                                    const data = {
+                                        name:user.username,
+                                        img:user.img,
+                                        massage:textType
+                                    }
+                                    socket.emit('massage',data)
+                                    setTextType('');
+                                    e.target.parentElement.parentElement.children[1].scrollTo(0,e.target.parentElement.parentElement.children[1].scrollHeight);
+                                    setEmoji(false); 
                                 }
-
+                               
+                            }else{
+                                setSendFile('');
+                            }
                         }
                     
                     }}

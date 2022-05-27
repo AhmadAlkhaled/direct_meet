@@ -26,10 +26,10 @@ const Home = ()=>{
 
     useEffect(()=>{
     const url = document.location.href.substring(22,1000)
-    console.log(url);
     setHref(url)
 
     },[]);
+    
    
   
 
@@ -38,8 +38,6 @@ const Home = ()=>{
         <div className="home_main">
         <Header />
         
-       
-           
             <div className="home_second">
 
             <div className="home_form">
@@ -79,11 +77,9 @@ const Home = ()=>{
                              </a>
                             :<button type="submit" name="start"
                             onClick={ ()=>{ 
-                                setID(meetingId)
-                                
-                                setTimeout (()=>{
+                                console.log(meetingId);
                                     navigate(`/Meeting${meetingId}`);
-                                },500)
+                                    location.reload();
                             }}
                               >+ join</button>
                         }

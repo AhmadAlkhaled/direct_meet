@@ -73,16 +73,12 @@ const Header = ()=> {
             x.addEventListener('change',(e)=>{
                 const openFile = function(file) {
                     const input = file.target;
-                    
                     const reader = new FileReader();
                     reader.onload = function(){
                     const dataURL = reader.result;
                     setImgSrc(dataURL)
-                    
-                    
                     const data = {confirmEmail:userInfo.email ,  buffer:dataURL, originalname:x.files[0].name , mimetype:x.files[0].type  }
 
-                  
                         axios.post('http://localhost:3000/uploadphoto',data)
                         .then((e)=>{
                             console.log('img updated .. ');
@@ -127,7 +123,7 @@ const Header = ()=> {
         <motion.div className="profile_window"
             initial={{x:0}}
             animate={{x:(open)? '-450px' : 0}}
-            transition={{duration:1}} 
+            transition={{duration:0.6}} 
         >
                 
             {
