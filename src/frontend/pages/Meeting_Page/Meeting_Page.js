@@ -160,6 +160,7 @@ const MeetingPage = (props) => {
             ScreenCall=true;
             VideoCall = false;
             AudioCall = false;
+           
         });
 
         socket.on('screenStop', (msg) => {
