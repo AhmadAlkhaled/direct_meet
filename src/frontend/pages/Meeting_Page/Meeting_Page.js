@@ -255,19 +255,24 @@ const MeetingPage = (props) => {
                     console.log(userPeer.peerId);
                 }
             });
-          
-            const x1 = document.querySelector('.home_main');
-            if( x1.clientWidth < 600  )
+            if(peers.length = 1)
             {
-                setStreamBoxWidth('100%');
-                setSvideoBoxWidth('50%');
+                
+                const x1 = document.querySelector('.home_main');
+                if( x1.clientWidth < 600  )
+                {
+                    setStreamBoxWidth('100%');
+                    setSvideoBoxWidth('50%');
+    
+                }else {
+                    setStreamBoxWidth('20%');
+                    setSvideoBoxWidth('100%');
+                }
+                const x = document.querySelector('.videoBox');
+                setvideoBox((x.clientWidth)/100*71.5)
 
-            }else {
-                setStreamBoxWidth('20%');
-                setSvideoBoxWidth('100%');
             }
-            const x = document.querySelector('.videoBox');
-            setvideoBox((x.clientWidth)/100*71.5)
+        
         });
     
     }
