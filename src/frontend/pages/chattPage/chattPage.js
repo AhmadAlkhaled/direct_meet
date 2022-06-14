@@ -120,7 +120,7 @@ const Chatt = (props) => {
             <div className="icoBox" >
             <i class="fa-solid fa-up-right-from-square"
             onClick={()=>{
-                window.open('http://localhost:3000/chatt')
+              
             }}
             ></i>
             <i class="fa-solid fa-xmark" onClick={()=>{ props.setChat(false) }} ></i>

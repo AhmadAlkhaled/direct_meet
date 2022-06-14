@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from 'react';
 import  { motion } from 'framer-motion';
 import { Chatt } from '../chattPage/chattPage';
 import  Peer  from "peerjs";
-import { Join } from '../Join/Join';
 import { useNavigate } from 'react-router-dom';
 import { io } from "socket.io-client";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss';
 const { v4: uuidv4 } = require('uuid');
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { Test } from '../test_Media/test_Media';
 
 
 
@@ -57,7 +57,7 @@ const MeetingPage = (props) => {
     const [ userScreen, setUserScreen] = useState(false);
     const [ pageW, setPageW] = useState('');
     const [ H, setH] = useState('');
-   
+    const [testPage, setTestPage] = useState(true);
     
     const [ peers, setPeers] = useState([]);
     
@@ -82,25 +82,22 @@ const MeetingPage = (props) => {
         },100);
     }
    
-    useEffect(()=>{
-        console.log(AudioCall);
-        console.log(ScreenCall);
-    },[AudioCall,ScreenCall])
-  
+ 
     useEffect(()=>{
 
         peer.on('open', function(){
             socket.emit('peer', peer.id );
             setPeerId(peer.id);
-            socket.emit('massage','load');
         });
 
         socket.on('peer', (newpeer) => {
-
-            console.log(newpeer);
             setPeers(newpeer);
         });
-        
+        socket.on('Close_Meeting', () => {
+            navigate(`/`);
+            location.reload();
+        });
+      
       
 
      if(tok == null)
@@ -121,9 +118,11 @@ const MeetingPage = (props) => {
    
     useEffect(()=>{
         const user = JSON.parse(localStorage.getItem('user'));
+      
         const UserData = { userName:user.username  , img : user.img }
         socket.emit('join-room', roomid, JSON.stringify(UserData) )
-        
+            
+       
         socket.on('user-disconnected', (peers) => {
             setPeers(peers);
         });
@@ -178,8 +177,8 @@ const MeetingPage = (props) => {
         peer.on('call', function(call) {
         
                 call.answer(); 
-                console.log( 'called : => '+ call.peer);
-               
+             
+              
                 if(ScreenCall)
                 {
                     call.on('stream', function(remoteStream) {
@@ -230,17 +229,12 @@ const MeetingPage = (props) => {
         });
     },[]);
 
-  
-
-
     useEffect(()=>{
        (dis)?'':socket.emit('join-room', roomid, id , userInfo.username);
 
        
     },[dis]);
 
-  
-      
     const  screenOn =  ()=>{
        
         socket.emit('screen');
@@ -252,12 +246,9 @@ const MeetingPage = (props) => {
                 if(peerId != userPeer.peerId)
                 {
                     call = peer.call(userPeer.peerId, stream);
-                    console.log(userPeer.peerId);
                 }
             });
-            if(peers.length = 1)
-            {
-                
+          
                 const x1 = document.querySelector('.home_main');
                 if( x1.clientWidth < 600  )
                 {
@@ -269,9 +260,8 @@ const MeetingPage = (props) => {
                     setSvideoBoxWidth('100%');
                 }
                 const x = document.querySelector('.videoBox');
-                setvideoBox((x.clientWidth)/100*71.5)
-
-            }
+                setvideoBox((x.clientWidth)/100*71.5);
+            
         
         });
     
@@ -378,14 +368,16 @@ const MeetingPage = (props) => {
   
     return (
         <div className="meeting_page" >
+
+            {
+                (testPage)?<Test setTestPage={setTestPage} />:''
+            }
             
             {
                 (loginOn)?'':<div className='logo logoJoin' ></div>
             }
             
-            {
-                (loginOn)?'':<Join setDis={setDis} dis={dis} />
-            }
+          
              
            {
                (meetingLink)?
@@ -427,7 +419,7 @@ const MeetingPage = (props) => {
             }
         
 
-            <div id='streamBox' className="streamBox" style={{ width: streamBoxWidth ,height:(screen || userScreen )? ( pageW < 600 )? '55%' : '100%' :'84%'}} >
+            <div id='streamBox' className="streamBox" style={{ width: streamBoxWidth ,height:(screen || userScreen )? ( pageW < 600 )? '55%' : '100%' :'84%'}}  >
 
                 {
                     peers.map((peer)=>{
@@ -520,8 +512,8 @@ const MeetingPage = (props) => {
                        
                           <i class="fa-solid fa-arrow-right-from-bracket"
                           onClick={()=>{
-                            navigate(`/`);
-                            location.reload();
+                            socket.emit('Close_Meeting')
+                            
                           }}
                           > <snap>Close Meeting  </snap> </i>
                         

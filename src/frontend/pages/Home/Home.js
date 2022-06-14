@@ -41,17 +41,7 @@ const Home = ()=>{
             <div className="home_second">
 
             <div className="home_form">
-            {
-                (aboutText) ?
-                <>
-                    <i class="fas fa-angle-left"
-                    onClick={()=>{
-                        setAboutText(false)
-                    }}></i>
-                    <p className="home_p_text">Hallo there how are you we are a team from GErmany and we work together in this project, we will be happy if you sponsor us with our project, and we Wish that you enjoy our Applecation.
-                    </p>
-                </>
-                :
+           
                 <>
                     <h1>Direct Meet</h1>
                     <p className="home_p_text">Video Chat services allow people to have face-to-face conversations.<br/>
@@ -85,14 +75,10 @@ const Home = ()=>{
                         }
                     </div>
                 </>
-            }
+            
                 <div className="home_line"></div>
                 <br />
-                <p className="home_p_footer"> Direct Meet&nbsp;<span className="more_about"
-                onClick={()=>{
-                    setAboutText(true)
-                }}
-                >More About</span> </p>
+                <p className="home_p_footer"> Direct Meet&nbsp; </p>
             </div>
         </div> 
 

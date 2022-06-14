@@ -261,6 +261,10 @@ io.on('connection', socket => {
         socket.on('screenStop', () => {
             io.sockets.in(roomId).emit('screenStop')
         });
+        socket.on('Close_Meeting', () => {
+            io.sockets.in(roomId).emit('Close_Meeting')
+        });
+     
      
         socket.on('camera', (peerId) => {
             peers =  peers.map((peer)=>{
@@ -308,7 +312,7 @@ io.on('connection', socket => {
             io.sockets.in(roomId).emit('micStop',peers,peerId)
         });
         socket.on('massage', (msg) => {
-           
+            
             io.sockets.in(roomId).emit('massage',msg)
         });
        
