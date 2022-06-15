@@ -36,15 +36,18 @@ const Test = (props) => {
         <div className='Test_Media' >
             {/* <h2 > Test your Media </h2> */}
             <button className='MeetingButton' onClick={()=>{
-              const x = video.current.srcObject.getTracks();
-              x.forEach(((track)=>{
-                if(track.kind ==  'video')
+                if(!stream)
                 {
-                    track.stop();
-                }
-              }))
-              
-                props.setTestPage(false) 
+                    const x = video.current.srcObject.getTracks();
+                    x.forEach(((track)=>{
+                      if(track.kind ==  'video')
+                      {
+                          track.stop();
+                      }
+                    }));
+
+                };
+                props.setTestPage(false); 
                 }} > Meeting </button>
             <div className='MediaBox' > 
            
