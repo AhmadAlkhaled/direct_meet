@@ -117,8 +117,8 @@ const MeetingPage = (props) => {
 
    
     useEffect(()=>{
+
         const user = JSON.parse(localStorage.getItem('user'));
-      
         const UserData = { userName:user.username  , img : user.img }
         socket.emit('join-room', roomid, JSON.stringify(UserData) )
             
@@ -385,15 +385,16 @@ const MeetingPage = (props) => {
                <i class="fa-solid fa-xmark" title='exit' onClick={()=>{ setMeetingLink(false) }} ></i>
               
                <p> Meeting Link </p>
-               <p>{document.location.href.substring(22,1000)} 
+               {/* https://directmeet.herokuapp.com/Meeting90b83849-5f2a-4408-84b0-03b5224ee0ab */}
+               <p>{document.location.href.substring(32,1000)} 
                <CopyToClipboard text={document.location.href.substring(0,1000)}>
                <i class="fa-regular fa-clone" title='copy link' ></i>
                </CopyToClipboard>
                
                </p>
                <p> Meeting ID </p> 
-               <p>{document.location.href.substring(29,1000)} 
-               <CopyToClipboard text={document.location.href.substring(29,1000)}>
+               <p>{document.location.href.substring(39,1000)} 
+               <CopyToClipboard text={document.location.href.substring(39,1000)}>
                <i class="fa-regular fa-clone" title='copy link' ></i> 
                </CopyToClipboard>
               
