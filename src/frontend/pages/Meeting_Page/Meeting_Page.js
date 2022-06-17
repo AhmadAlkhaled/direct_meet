@@ -386,15 +386,15 @@ const MeetingPage = (props) => {
               
                <p> Meeting Link </p>
                {/* https://directmeet.herokuapp.com/Meeting90b83849-5f2a-4408-84b0-03b5224ee0ab */}
-               <p>{document.location.href.substring(32,1000)} 
+               <p>{document.location.href.substring(33,1000)} 
                <CopyToClipboard text={document.location.href.substring(0,1000)}>
                <i class="fa-regular fa-clone" title='copy link' ></i>
                </CopyToClipboard>
                
                </p>
                <p> Meeting ID </p> 
-               <p>{document.location.href.substring(39,1000)} 
-               <CopyToClipboard text={document.location.href.substring(39,1000)}>
+               <p>{document.location.href.substring(33,1000)} 
+               <CopyToClipboard text={document.location.href.substring(33,1000)}>
                <i class="fa-regular fa-clone" title='copy link' ></i> 
                </CopyToClipboard>
               
