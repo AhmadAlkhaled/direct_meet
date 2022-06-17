@@ -393,8 +393,8 @@ const MeetingPage = (props) => {
                
                </p>
                <p> Meeting ID </p> 
-               <p>{document.location.href.substring(33,1000)} 
-               <CopyToClipboard text={document.location.href.substring(33,1000)}>
+               <p>{document.location.href.substring(40,1000)} 
+               <CopyToClipboard text={document.location.href.substring(40,1000)}>
                <i class="fa-regular fa-clone" title='copy link' ></i> 
                </CopyToClipboard>
               
