@@ -292,11 +292,11 @@ const MeetingPage = (props) => {
         });
     }
 
-    const cameraOn = () => { 
-        socket.emit('camera',peerId)
-        navigator.mediaDevices.getUserMedia({ video:{ width:'100%'} })
-        .then((stream)=>{ 
-            setCamera(true); 
+    const cameraOn = async () => { 
+        try {
+            socket.emit('camera',peerId);
+            const stream =  await navigator.mediaDevices.getUserMedia({ video:{ width:'100%'} });
+            setCamera(true);
             cameraRef.current.srcObject = stream ;
             peers.map((userPeer)=>{
                 if(peerId != userPeer.peerId)
@@ -304,8 +304,14 @@ const MeetingPage = (props) => {
                     call = peer.call(userPeer.peerId, stream );
                 }
             });
+        }catch{
+            socket.emit('cameraStop',peerId);
+            setCamera(false);
+        }
 
-        });
+        
+       
+   
     }
     const  videoStop = ()=>{
         socket.emit('cameraStop',peerId)
@@ -317,10 +323,10 @@ const MeetingPage = (props) => {
             }});
     }
     
-    const audioOn = () => { 
-        socket.emit('mic',peerId)
-        navigator.mediaDevices.getUserMedia({ audio:true })
-        .then((stream)=>{ 
+    const audioOn = async () => { 
+        try{
+            socket.emit('mic',peerId);
+            const stream =  await navigator.mediaDevices.getUserMedia({ audio:true });
             setMic(true);
             peers.map((userPeer)=>{
                 if(peerId != userPeer.peerId)
@@ -328,7 +334,13 @@ const MeetingPage = (props) => {
                     call = peer.call(userPeer.peerId, stream );
                 }
             });
-        });
+        }catch{
+            socket.emit('micStop',peerId);
+            setMic(false);
+        }
+
+        
+ 
     }
    
     const  audioStop = ()=>{
