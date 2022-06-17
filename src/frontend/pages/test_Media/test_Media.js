@@ -17,7 +17,7 @@ const Test = (props) => {
             setStream(true);
            }
      }
-     first()
+    //  first()
 
     if(mic)
     {
@@ -36,17 +36,17 @@ const Test = (props) => {
         <div className='Test_Media' >
             {/* <h2 > Test your Media </h2> */}
             <button className='MeetingButton' onClick={()=>{
-                if(!stream)
-                {
-                    const x = video.current.srcObject.getTracks();
-                    x.forEach(((track)=>{
-                      if(track.kind ==  'video')
-                      {
-                          track.stop();
-                      }
-                    }));
+                // if(!stream)
+                // {
+                //     const x = video.current.srcObject.getTracks();
+                //     x.forEach(((track)=>{
+                //       if(track.kind ==  'video')
+                //       {
+                //           track.stop();
+                //       }
+                //     }));
 
-                };
+                // };
                 props.setTestPage(false); 
                 }} > Meeting </button>
             <div className='MediaBox' > 
